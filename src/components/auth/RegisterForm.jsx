@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import {ImSpinner3} from 'react-icons/im'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Swal from 'sweetalert2'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterForm = () => {
   const [isPending,setIsPending] = useState(false)
@@ -18,21 +19,10 @@ const RegisterForm = () => {
         const response = axios.post('https://cms.ourcarediary.com/api/register',{
             name,email,password,c_password:comfirmPassword
         }).then(function(response){
-            Swal.fire({
-              title: "Success",
-              text: "successfully Register!",
-              icon: "success",
-              confirmButtonText: "OK",
-            }).then(function () {
-              navigate('/auth/login');
-              })
+          toast.success("successfully Register !")
+          setTimeout(() => navigate('/auth/login'), 2000);
           }).catch(error =>{
-            Swal.fire({
-              title: "Error",
-              text: "Something Wrong!",
-              icon: "error",
-              confirmButtonText: "CANCEL",
-            })
+            toast.error("Something Wrong !")
         })
   }
 
@@ -102,6 +92,7 @@ const RegisterForm = () => {
               </div>
           </form>
       </div>
+      <ToastContainer position="bottom-right"/>
    </div>
   )
 }

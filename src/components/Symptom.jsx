@@ -21,28 +21,31 @@ const cardsData = [
 
 const Symptom = () => {
 
-    const token =  useSelector(state=>state.user.user.token.accessToken);
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
+    const user =  useSelector(state=>state.user);
+    // const config = {
+    //     headers: { Authorization: `Bearer ${user.user.token.accessToken}` }
+    // };
 
     useEffect(()=> {
-        console.log(token)
-        const getSynptoms = async () =>{
-          try{
-            const res = await axios.get('https://cms.ourcarediary.com/api/symptoms',config);
-            console.log(res)
+        console.log('suc')
+        console.log(user.login)
+        // const getSynptoms = async () =>{
+        //   try{
+        //     const res = await axios.get('https://cms.ourcarediary.com/api/symptoms',config);
+        //     console.log(res)
             
-          }catch(err){}
-        };
-        getSynptoms();
+        //   }catch(err){}
+        // };
+        // getSynptoms();
       },[]);
     const variants = {
         hidden: { opacity: 0, scale: 0.9 },
         visible: { opacity: 1, scale: 1.2 },
     };
   return (
-
+    <>
+    {
+        user.login == false ? <div className=' font-bold text-xl flex justify-center items-center'>401 Unauthorized !</div>:
     <div className='lg:fixed pt-7 inset-0 dark:bg-primary bg-white -z-10 flex justify-center items-center'>
       <div className=' flex flex-col lg:flex-row space-y-12 lg:space-y-0 space-x-0 lg:space-x-20 dark:text-white text-primary max-w-screen-lg mx-auto items-center  shadow-lg '>
       {cardsData.map((card) => (
@@ -59,7 +62,10 @@ const Symptom = () => {
         </motion.div>
         ))}
       </div>
-   </div>
+    </div>
+    }
+    </>
+    
   )
 }
 

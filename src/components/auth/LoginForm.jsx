@@ -3,7 +3,8 @@ import {ImSpinner3} from 'react-icons/im'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
-import Swal from "sweetalert2";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { loginSuccess,addUser } from '../../store/slices/UserSlice'
 
 const LoginForm = () => {
@@ -21,24 +22,12 @@ const LoginForm = () => {
         const response = axios.post('https://cms.ourcarediary.com/api/login',{
             email,password
         }).then(function(response){
-            Swal.fire({
-              title: "Success",
-              text: "successfully Login!",
-              icon: "success",
-              confirmButtonText: "OK",
-            }).then(function () {
-              console.log(response.data)
+              toast.success("successfully Login !")
               dispatch(loginSuccess());
               dispatch(addUser(response.data.data));
-              navigate('/symptoms');
-              })
+              setTimeout(() => navigate('/symptoms'), 2000);
           }).catch(error =>{
-            Swal.fire({
-              title: "Error",
-              text: "Something Wrong Email or Password!",
-              icon: "error",
-              confirmButtonText: "CANCEL",
-            })
+            toast.error("Something Wrong Email or Password !")
         })
   }
 
@@ -84,6 +73,7 @@ const LoginForm = () => {
               </div>
           </form>
       </div>
+      <ToastContainer position="bottom-right"/>
    </div>
   )
 }
